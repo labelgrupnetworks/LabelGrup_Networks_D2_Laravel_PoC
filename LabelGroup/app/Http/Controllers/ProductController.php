@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -24,7 +25,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::get();
+        return view('products.index')->with('products', $products);
     }
 
     /**
@@ -34,7 +36,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**
@@ -45,18 +47,22 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $product = new Product;
+        $product->name = $request->input('name');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
+        $product->save();
+
+        foreach ($request->input('categories_ids') as $category_id) {
+            $productCategory = ProductCategory::where('product_id', $product->id)->where('category_id', $category_id);
+            $product->category_id = $category_id;
+            $productCategory->product_id = $product->id;
+            $productCategory->save();
+        }
+
+        $product->update(['main_category_id'], $request->input('main_category_id'));
+
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -65,9 +71,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        return view('product.edit')->with('product', $product);
     }
 
     /**
@@ -79,7 +86,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product->name = $request->input('name');
+        $product->save();
+
+        foreach ($request->input('categories_ids') as $category_id) {
+            $productCategory = ProductCategory::where('product_id', $product->id)->where('category_id', $category_id);
+            $product->category_id = $category_id;
+            $productCategory->product_id = $product->id;
+            $productCategory->save();
+        }
+
+        $product->update(['main_category_id'], $request->input('main_category_id'));
+
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -88,8 +108,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $product = product::find($id);
+        $product->delete();
+        return redirect()->route('products.index');
     }
 }
