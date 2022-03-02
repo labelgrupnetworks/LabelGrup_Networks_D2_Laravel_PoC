@@ -14,7 +14,7 @@ class ImageController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('lang');
+        $this->middleware('auth');
     }
 
     /**
@@ -24,7 +24,8 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
+        $images = Image::get();
+        return view('images.index')->with('images', $images);
     }
 
     /**
@@ -34,7 +35,7 @@ class ImageController extends Controller
      */
     public function create()
     {
-        //
+        return view('image.create');
     }
 
     /**
@@ -45,18 +46,16 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $image = new Image;
+        $image->url = $request->input('url');
+        $image->description = $request->input('description');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Image $image)
-    {
-        //
+        $image->save();
+
+        // GUARDAR IMAGEN
+        $request->file($image->url)->store('public/images');
+
+        return redirect()->route('images.index');
     }
 
     /**
@@ -65,9 +64,10 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function edit(Image $image)
+    public function edit($id)
     {
-        //
+        $image = Image::find($id);
+        return view('image.edit')->with('image', $image);
     }
 
     /**
@@ -79,7 +79,12 @@ class ImageController extends Controller
      */
     public function update(Request $request, Image $image)
     {
-        //
+        $image->name = $request->input('url');
+        $image->name = $request->input('description');
+
+        $image->save();
+
+        return redirect()->route('images.index');
     }
 
     /**
@@ -88,8 +93,11 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Image $image)
+    public function destroy($id)
     {
-        //
+        $image = image::find($id);
+        $image->delete();
+
+        return redirect()->route('images.index');
     }
 }
