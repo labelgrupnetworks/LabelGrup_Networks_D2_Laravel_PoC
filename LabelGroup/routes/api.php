@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix' => '/product'], function (){
+    Route::get('/', [\App\Http\Controllers\ProductController::class, 'index']);
+    Route::post('/create', [\App\Http\Controllers\ProductController::class, 'create']);
+    Route::patch('/update/{id}/{category_id}/{main_category_id}', [\App\Http\Controllers\ProductController::class, 'edit']);
+    Route::delete('/delete/{id}', [\App\Http\Controllers\ProductController::class, 'delete']);
+});
