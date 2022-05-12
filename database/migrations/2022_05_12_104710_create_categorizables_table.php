@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImageTable extends Migration
+class CreateCategorizablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateImageTable extends Migration
      */
     public function up()
     {
-        Schema::create('image', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('url');
-            $table->timestamps();
+        Schema::create('categorizables', function (Blueprint $table) {
+            $table->integer('category_id');
+            $table->integer('categorizable_id');
+            $table->string('categorizable_type');
+            $table->boolean('is_primary');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateImageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('image');
+        Schema::dropIfExists('categorizables');
     }
 }
