@@ -1,4 +1,4 @@
-# Laravel - Candidato: {>> Nombre <<}
+# Laravel - Candidato: Oscar Pascual
 
 La prueba consiste en realizar, de forma totalmente libre, un proyecto que cumpla con todos los puntos definidos a continuación:
 
