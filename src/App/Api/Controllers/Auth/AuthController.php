@@ -15,11 +15,15 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
-    public function register(CreateUserRequest $request, CreateUserAction $createUserAction): UserResource
+    public function register(CreateUserRequest $request, CreateUserAction $createUserAction): JsonResponse
     {
         $data = new UserData(...$request->validated());
-        $user = ($createUserAction)($data);
-        return new UserResource($user);
+        ($createUserAction)($data);
+        return response()
+            ->json([
+                'message' => 'You have registered successfully! To get your token log in using your email and password.',
+                'location' => 'https://foo/bar', // TODO: send route for view user
+            ], 201);
     }
 
     public function login(LoginRequest $request): UserResource|JsonResponse
