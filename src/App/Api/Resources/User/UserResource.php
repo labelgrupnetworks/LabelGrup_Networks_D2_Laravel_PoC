@@ -14,7 +14,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'token' => $this->createToken('auth_token')->plainTextToken,
+            'token' => $this->createAuthToken(),
             'token_type' => 'Bearer',
             'created_at' => $this->created_at->format('d-m-Y'),
             'updated_at' => $this->updated_at->format('d-m-Y'),
