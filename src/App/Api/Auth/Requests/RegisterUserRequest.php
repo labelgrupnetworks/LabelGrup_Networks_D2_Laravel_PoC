@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Api\Requests\Auth;
+namespace App\Api\Auth\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Support\Traits\FailedValidationToJson;
 
-class CreateUserRequest extends FormRequest
+class RegisterUserRequest extends FormRequest
 {
     use FailedValidationToJson;
 

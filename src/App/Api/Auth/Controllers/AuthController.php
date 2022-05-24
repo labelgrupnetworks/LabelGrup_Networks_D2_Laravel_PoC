@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Api\Controllers\Auth;
+namespace App\Api\Auth\Controllers;
 
-use App\Api\Controllers\Controller;
-use App\Api\Requests\Auth\CreateUserRequest;
-use App\Api\Requests\Auth\LoginRequest;
-use App\Api\Resources\User\UserResource;
+use App\Api\Auth\Requests\LoginRequest;
+use App\Api\Auth\Requests\RegisterUserRequest;
+use App\Api\Auth\Resources\LoginUserResource;
+use App\Api\Controller;
 use Domain\Users\Actions\CreateUserAction;
 use Domain\Users\DTO\UserData;
 use Domain\Users\Models\User;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
-    public function register(CreateUserRequest $request, CreateUserAction $createUserAction): JsonResponse
+    public function register(RegisterUserRequest $request, CreateUserAction $createUserAction): JsonResponse
     {
         $data = new UserData(...$request->validated());
         ($createUserAction)($data);
@@ -26,7 +26,7 @@ class AuthController extends Controller
             ], 201);
     }
 
-    public function login(LoginRequest $request): UserResource|JsonResponse
+    public function login(LoginRequest $request): LoginUserResource|JsonResponse
     {
         if (!Auth::attempt($request->only('email', 'password'))){
             return response()->json([
@@ -35,7 +35,7 @@ class AuthController extends Controller
         }
 
         $user = User::whereEmail($request->email)->firstOrFail();
-        return new UserResource($user);
+        return new LoginUserResource($user);
     }
 
     public function logout(): JsonResponse
