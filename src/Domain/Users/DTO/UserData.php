@@ -2,12 +2,13 @@
 
 namespace Domain\Users\DTO;
 
-class UserData
+use Domain\Shared\Interfaces\IData;
+
+class UserData implements IData
 {
     public function __construct(
-        public string $name,
-        public string $email,
-        public string $password,
-    )
-    {}
+        public ?string $name = null,
+        public ?string $email = null,
+        public ?string $password = null,
+    ){}
 }

@@ -4,6 +4,7 @@ namespace Domain\Categories\Models;
 
 use Database\Factories\CategoryFactory;
 use Domain\Products\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,6 +12,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Category extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'description'];
+
+    public array $allowedSorts = ['name'];
 
     protected static function newFactory(): CategoryFactory
     {
@@ -36,18 +41,22 @@ class Category extends Model
         return [
             'name' => $this->name,
             'description' => $this->description,
-            'created-at' => $this->created_at,
-            'updated-at' => $this->updated_at,
+            'created-at' => $this->created_at->format('d-m-Y'),
+            'updated-at' => $this->updated_at->format('d-m-Y'),
         ];
     }
 
     public function fieldsForRelations(): array
     {
         return [
-            'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
+            'location' => route('categories.show', $this),
             'is_main' => (bool)$this->pivot->main,
         ];
+    }
+
+    public function scopeName(Builder $query, $value)
+    {
+        $query->orWhere('name', 'LIKE', "%$value%");
     }
 }

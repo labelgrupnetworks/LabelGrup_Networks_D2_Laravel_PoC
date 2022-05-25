@@ -17,10 +17,10 @@ class CategoryCollection extends ResourceCollection
         return [
             'data' => $this->collection,
             'links' => [
-                'self' => 'https://foo/bar/foobar',//route('api.v1.articles.index')
+                'self' => route('categories.index'),
             ],
             'meta' => [
-                'products_count' => $this->collection->count()
+                'categories_count' => $this->collection->count()
             ]
         ];
     }

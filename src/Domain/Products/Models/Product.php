@@ -29,8 +29,7 @@ class Product extends Model
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
-            'is_main' => (bool)$this->pivot->main,
+            'location' => route('products.show', $this),
         ];
     }
 

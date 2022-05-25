@@ -25,7 +25,7 @@ class CategoryResource extends JsonResource
                 ]
             ],
             'links' => [
-                'self' => 'https://foo/bar', /*route('api.v1.' . $this->resource->getTable() . '.show', $this->resource)*/
+                'self' => route('categories.show', $this->resource)
             ]
         ];
     }
