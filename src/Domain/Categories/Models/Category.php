@@ -19,6 +19,35 @@ class Category extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot('main');
+    }
+
+    public function getProducts(): array
+    {
+        $data = [];
+        foreach ($this->products as $product){
+            $data[] = $product->fieldsForRelations();
+        }
+        return $data;
+    }
+
+    public function fields(): array
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'created-at' => $this->created_at,
+            'updated-at' => $this->updated_at,
+        ];
+    }
+
+    public function fieldsForRelations(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'is_main' => (bool)$this->pivot->main,
+        ];
     }
 }

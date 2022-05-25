@@ -12,6 +12,37 @@ class Product extends Model
 {
     use HasFactory;
 
+    public function fields(): array
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'price' => $this->price,
+            'stock' => $this->stock,
+            'created-at' => $this->created_at,
+            'updated-at' => $this->updated_at,
+        ];
+    }
+
+    public function fieldsForRelations(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'is_main' => (bool)$this->pivot->main,
+        ];
+    }
+
+    public function getCategories(): array
+    {
+        $data = [];
+        foreach ($this->categories as $key => $category){
+            $data[] = $category->fieldsForRelations();
+        }
+        return $data;
+    }
+
     protected static function newFactory(): ProductFactory
     {
         return new ProductFactory();
