@@ -18,9 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        User::factory(10)->create()->each(function (User $user){
-            $user->createAuthToken();
-        });
+        User::factory(10)->create();
 
         $categories = Category::factory(10)->create();
 

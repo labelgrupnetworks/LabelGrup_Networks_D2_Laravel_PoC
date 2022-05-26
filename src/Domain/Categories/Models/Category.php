@@ -17,6 +17,7 @@ class Category extends Model
 
     public array $allowedSorts = ['name'];
 
+    // Model functions
     protected static function newFactory(): CategoryFactory
     {
         return new CategoryFactory();
@@ -27,6 +28,7 @@ class Category extends Model
         return $this->belongsToMany(Product::class)->withPivot('main');
     }
 
+    // Resource functions
     public function getProducts(): array
     {
         $data = [];
@@ -56,6 +58,7 @@ class Category extends Model
         ];
     }
 
+    // SCOPES
     public function scopeName(Builder $query, $value)
     {
         $query->orWhere('name', 'LIKE', "%$value%");

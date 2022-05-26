@@ -4,6 +4,7 @@
 use App\Api\Auth\Controllers\AuthController;
 use App\Api\Categories\Controllers\CategoryController;
 use App\Api\Products\Controllers\ProductController;
+use App\Api\Users\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,5 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('logout', [AuthController::class, 'logout'])->name('api.auth.logout');
     Route::apiResource('products', ProductController::class);
     Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('users', UserController::class);
 });

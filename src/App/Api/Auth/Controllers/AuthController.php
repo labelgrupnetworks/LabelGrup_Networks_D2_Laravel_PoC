@@ -38,7 +38,7 @@ class AuthController extends Controller
         }
 
         $user = User::whereEmail($request->email)->firstOrFail();
-        return new LoginUserResource($user);
+        return LoginUserResource::make($user);
     }
 
     public function logout(): JsonResponse
