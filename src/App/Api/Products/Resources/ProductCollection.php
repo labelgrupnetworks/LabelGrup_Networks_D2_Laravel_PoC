@@ -17,7 +17,7 @@ class ProductCollection extends ResourceCollection
         return [
             'data' => $this->collection,
             'links' => [
-                'self' => 'https://foo/bar/foobar',//route('api.v1.articles.index')
+                'self' => route('products.index'),
             ],
             'meta' => [
                 'products_count' => $this->collection->count()

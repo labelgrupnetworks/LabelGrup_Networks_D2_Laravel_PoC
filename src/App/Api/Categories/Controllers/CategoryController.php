@@ -15,11 +15,10 @@ use Illuminate\Http\JsonResponse;
 use Throwable;
 
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     public function index(): CategoryCollection
     {
-        //$categories = Category::all()->applyFilters()->applySorts()->jsonPaginate();
         $categories = Category::applySorts(request('sort'))->applyFilters()->jsonPaginate();
         return CategoryCollection::make($categories);
     }

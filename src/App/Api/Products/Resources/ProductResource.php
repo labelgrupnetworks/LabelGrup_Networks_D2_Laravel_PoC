@@ -25,7 +25,7 @@ class ProductResource extends JsonResource
                 ]
             ],
             'links' => [
-                'self' => 'https://foo/bar', /*route('api.v1.' . $this->resource->getTable() . '.show', $this->resource)*/
+                'self' => route('products.show', $this->resource)
             ]
         ];
     }

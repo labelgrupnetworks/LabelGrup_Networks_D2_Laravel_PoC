@@ -28,6 +28,9 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request): LoginUserResource|JsonResponse
     {
+        $user = User::whereEmail($request->email)->firstOrFail();
+        $user->tokens()->delete();
+
         if (!Auth::attempt($request->only('email', 'password'))){
             return response()->json([
                 'message' => 'Unauthorized',

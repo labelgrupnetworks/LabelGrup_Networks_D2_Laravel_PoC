@@ -12,6 +12,10 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description', 'price', 'stock'];
+
+    public array $allowedSorts = ['name', 'price', 'stock'];
+
     public function fields(): array
     {
         return [
@@ -19,8 +23,8 @@ class Product extends Model
             'description' => $this->description,
             'price' => $this->price,
             'stock' => $this->stock,
-            'created-at' => $this->created_at,
-            'updated-at' => $this->updated_at,
+            'created-at' => $this->created_at->format('d-m-Y'),
+            'updated-at' => $this->updated_at->format('d-m-Y'),
         ];
     }
 
