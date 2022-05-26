@@ -3,6 +3,7 @@
 
 use App\Api\Auth\Controllers\AuthController;
 use App\Api\Categories\Controllers\CategoryController;
+use App\Api\Products\Controllers\ProductCategoryController;
 use App\Api\Products\Controllers\ProductController;
 use App\Api\Users\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -27,4 +28,16 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::apiResource('products', ProductController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('users', UserController::class);
+
+    Route::get('product-categories/{product}/categories', [ProductCategoryController::class, 'index'])
+        ->name('api.product-categories.index');
+
+    Route::post('product-categories/{product}/create', [ProductCategoryController::class, 'store'])
+        ->name('api.create-product-categories.index');
+
+    Route::patch('product-categories/{product}/update', [ProductCategoryController::class, 'update'])
+        ->name('api.update-product-categories.index');
+
+    Route::delete('product-categories/{product}/destroy', [ProductCategoryController::class, 'destroy'])
+        ->name('api.destroy-product-categories.index');
 });
