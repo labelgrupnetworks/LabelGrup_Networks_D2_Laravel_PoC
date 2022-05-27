@@ -22,6 +22,9 @@ class CategoryResource extends JsonResource
             'relationships' => [
                 'products' => [
                     'data' => $this->resource->getProducts()
+                ],
+                'images' => [
+                    'data' => $this->resource->getImages()
                 ]
             ],
             'links' => [

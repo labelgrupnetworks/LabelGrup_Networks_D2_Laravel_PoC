@@ -3,15 +3,20 @@
 namespace Domain\Categories\Models;
 
 use Database\Factories\CategoryFactory;
+use Domain\Images\Models\Image;
 use Domain\Products\Models\Product;
+use Domain\Shared\Interfaces\IHasImages;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-class Category extends Model
+class Category extends Model implements IHasImages
 {
     use HasFactory;
+
+    const IMAGEABLE_DIRECTORY = '/categories';
 
     protected $fillable = ['name', 'description'];
 
@@ -23,9 +28,9 @@ class Category extends Model
         return new CategoryFactory();
     }
 
-    public function products(): BelongsToMany
+    public function directoryForImages(): string
     {
-        return $this->belongsToMany(Product::class)->withPivot('main');
+        return self::IMAGEABLE_DIRECTORY;
     }
 
     // Resource functions
@@ -56,6 +61,26 @@ class Category extends Model
             'location' => route('categories.show', $this),
             'is_main' => (bool)$this->pivot->main,
         ];
+    }
+
+    public function getImages()
+    {
+        $data = [];
+        foreach ($this->images as $image){
+            $data[] = $image->fieldsForRelations();
+        }
+        return $data;
+    }
+
+    // Relations
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class)->withPivot('main');
+    }
+
+    public function images(): MorphToMany
+    {
+        return $this->morphToMany(Image::class,'imageable');
     }
 
     // SCOPES

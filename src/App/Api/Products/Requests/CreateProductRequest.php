@@ -13,6 +13,7 @@ class CreateProductRequest extends FormRequest
             'description' => 'required|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
+            'images' => 'nullable|array',
         ];
     }
 }
