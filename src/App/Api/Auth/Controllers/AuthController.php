@@ -19,6 +19,7 @@ class AuthController extends Controller
     {
         $data = new UserData(...$request->validated());
         $user = ($createUserAction)($data);
+        $user->assginRole('seller');
         return response()
             ->json([
                 'message' => 'You have registered successfully! To get your token log in using your email and password.',
@@ -28,9 +29,6 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request): LoginUserResource|JsonResponse
     {
-        $user = User::whereEmail($request->email)->firstOrFail();
-        $user->tokens()->delete();
-
         if (!Auth::attempt($request->only('email', 'password'))){
             return response()->json([
                 'message' => 'Unauthorized',
@@ -38,6 +36,7 @@ class AuthController extends Controller
         }
 
         $user = User::whereEmail($request->email)->firstOrFail();
+        $user->tokens()->delete();
         return LoginUserResource::make($user);
     }
 

@@ -17,6 +17,16 @@ use Throwable;
 
 class CategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:api.categories.index')->only('index');
+        $this->middleware('can:api.categories.store')->only('store');
+        $this->middleware('can:api.categories.show')->only('show');
+        $this->middleware('can:api.categories.update')->only('update');
+        $this->middleware('can:api.categories.destroy')->only('destroy');
+    }
+
     public function index(): CategoryCollection
     {
         $categories = Category::applySorts(request('sort'))->applyFilters()->jsonPaginate();

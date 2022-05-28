@@ -17,6 +17,16 @@ use Throwable;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:api.users.index')->only('index');
+        $this->middleware('can:api.users.store')->only('store');
+        $this->middleware('can:api.users.show')->only('show');
+        $this->middleware('can:api.users.update')->only('update');
+        $this->middleware('can:api.users.destroy')->only('destroy');
+    }
+
     public function index(): UserCollection
     {
         $products = User::applySorts(request('sort'))

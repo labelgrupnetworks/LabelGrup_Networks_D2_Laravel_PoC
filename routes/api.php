@@ -23,10 +23,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Auth
 Route::post('register', [AuthController::class, 'register'])->name('api.auth.register');
 Route::post('login', [AuthController::class, 'login'])->name('api.auth.login');
 
 Route::middleware('auth:sanctum')->group(function (){
+    // Auth
     Route::get('logout', [AuthController::class, 'logout'])->name('api.auth.logout');
 
     // Products, Categories and Users
@@ -35,26 +37,42 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::apiResource('users', UserController::class,['names' => 'api.users']);
 
     // Profile
-    Route::get('profile', ProfileController::class)->name('api.profile');
+    Route::get('profile', ProfileController::class)
+        ->name('api.profile')
+        ->middleware('can:api.profile');
 
     // Product-categories
     Route::get('product-categories/{product}/categories', [ProductCategoryController::class, 'index'])
-        ->name('api.product-categories.index');
+        ->name('api.product-categories.index')
+        ->middleware('can:api.product-categories.index');
 
     Route::post('product-categories/{product}/create', [ProductCategoryController::class, 'store'])
-        ->name('api.product-categories.store');
+        ->name('api.product-categories.store')
+        ->middleware('can:api.product-categories.store');
 
     Route::patch('product-categories/{product}/update', [ProductCategoryController::class, 'update'])
-        ->name('api.product-categories.update');
+        ->name('api.product-categories.update')
+        ->middleware('can:api.product-categories.update');
 
     Route::delete('product-categories/{product}/destroy', [ProductCategoryController::class, 'destroy'])
-        ->name('api.product-categories.destroy');
+        ->name('api.product-categories.destroy')
+        ->middleware('can:api.product-categories.destroy');
 
     // Category-main
-    Route::post('category-main/{product}', CategoryMainController::class)->name('api.category-main');
+    Route::post('category-main/{product}', CategoryMainController::class)
+        ->name('api.category-main')
+        ->middleware('can:api.category-main');
 
     // Images
-    Route::get('images', [ImageController::class, 'index'])->name('api.images.index');
-    Route::get('images/{image}', [ImageController::class, 'show'])->name('api.images.show');
-    Route::delete('images/{image}', [ImageController::class, 'destroy'])->name('api.images.destroy');
+    Route::get('images', [ImageController::class, 'index'])
+        ->name('api.images.index')
+        ->middleware('can:api.images.index');
+
+    Route::get('images/{image}', [ImageController::class, 'show'])
+        ->name('api.images.show')
+        ->middleware('can:api.images.show');
+
+    Route::delete('images/{image}', [ImageController::class, 'destroy'])
+        ->name('api.images.destroy')
+        ->middleware('can:api.images.destroy');
 });

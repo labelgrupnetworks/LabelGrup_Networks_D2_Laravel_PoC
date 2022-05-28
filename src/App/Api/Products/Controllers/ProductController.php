@@ -16,6 +16,16 @@ use Throwable;
 
 class ProductController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:api.products.index')->only('index');
+        $this->middleware('can:api.products.store')->only('store');
+        $this->middleware('can:api.products.show')->only('show');
+        $this->middleware('can:api.products.update')->only('update');
+        $this->middleware('can:api.products.destroy')->only('destroy');
+    }
+
     public function index(): ProductCollection
     {
         $products = Product::applySorts(request('sort'))
