@@ -20,7 +20,7 @@ class ProductCategoryResource extends JsonResource
             'id' => $this->resource->getRouteKey(),
             'attributes' => $this->resource->fieldsForRelations(),
             'links' => [
-                'self' => route('categories.show', $this->resource)
+                'self' => route('api.categories.show', $this->resource)
             ]
         ];
     }

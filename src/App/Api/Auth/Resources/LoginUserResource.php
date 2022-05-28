@@ -20,7 +20,7 @@ class LoginUserResource extends JsonResource
                 'token_value' => $this->resource->createAuthToken(),
             ],
             'links' => [
-                'self' => route('users.show', $this->resource)
+                'self' => route('api.users.show', $this->resource)
             ]
         ];
     }

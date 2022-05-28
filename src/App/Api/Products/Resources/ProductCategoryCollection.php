@@ -18,7 +18,7 @@ class ProductCategoryCollection extends ResourceCollection
         return [
             'data' => $this->collection,
             'links' => [
-                'self' => route('categories.index'),
+                'self' => route('api.categories.index'),
             ],
             'meta' => [
                 'categories_count' => $this->collection->count()

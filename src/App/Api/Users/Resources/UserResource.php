@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'id' => $this->resource->getRouteKey(),
             'attributes' => $this->resource->fields(),
             'links' => [
-                'self' => route('users.show', $this->resource)
+                'self' => route('api.users.show', $this->resource)
             ]
         ];
     }

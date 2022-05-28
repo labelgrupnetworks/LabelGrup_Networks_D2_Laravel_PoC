@@ -51,7 +51,7 @@ class Product extends Model implements IHasImages
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'location' => route('products.show', $this),
+            'location' => route('api.products.show', $this),
         ];
     }
 

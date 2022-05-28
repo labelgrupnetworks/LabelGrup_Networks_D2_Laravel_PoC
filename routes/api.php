@@ -27,9 +27,10 @@ Route::post('login', [AuthController::class, 'login'])->name('api.auth.login');
 
 Route::middleware('auth:sanctum')->group(function (){
     Route::get('logout', [AuthController::class, 'logout'])->name('api.auth.logout');
-    Route::apiResource('products', ProductController::class);
-    Route::apiResource('categories', CategoryController::class);
-    Route::apiResource('users', UserController::class);
+
+    Route::apiResource('products', ProductController::class,['names' => 'api.products']);
+    Route::apiResource('categories', CategoryController::class,['names' => 'api.categories']);
+    Route::apiResource('users', UserController::class,['names' => 'api.users']);
 
 
     Route::get('product-categories/{product}/categories', [ProductCategoryController::class, 'index'])
@@ -42,7 +43,7 @@ Route::middleware('auth:sanctum')->group(function (){
         ->name('api.product-categories.update');
 
     Route::delete('product-categories/{product}/destroy', [ProductCategoryController::class, 'destroy'])
-        ->name('api.-product-categories.destroy');
+        ->name('api.product-categories.destroy');
 
 
     Route::post('category-main/{product}', CategoryMainController::class)->name('api.category-main');

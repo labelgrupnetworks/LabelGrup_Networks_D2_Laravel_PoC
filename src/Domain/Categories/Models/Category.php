@@ -58,7 +58,7 @@ class Category extends Model implements IHasImages
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'location' => route('categories.show', $this),
+            'location' => route('api.categories.show', $this),
             'is_main' => (bool)$this->pivot->main,
         ];
     }
