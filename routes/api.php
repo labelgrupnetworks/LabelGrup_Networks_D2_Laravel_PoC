@@ -3,6 +3,7 @@
 
 use App\Api\Auth\Controllers\AuthController;
 use App\Api\Categories\Controllers\CategoryController;
+use App\Api\Images\Controllers\ImageController;
 use App\Api\Products\Controllers\CategoryMainController;
 use App\Api\Products\Controllers\ProductCategoryController;
 use App\Api\Products\Controllers\ProductController;
@@ -45,4 +46,9 @@ Route::middleware('auth:sanctum')->group(function (){
 
 
     Route::post('category-main/{product}', CategoryMainController::class)->name('api.category-main');
+
+
+    Route::get('images', [ImageController::class, 'index'])->name('api.images.index');
+    Route::get('images/{image}', [ImageController::class, 'show'])->name('api.images.show');
+    Route::delete('images/{image}', [ImageController::class, 'destroy'])->name('api.images.destroy');
 });
