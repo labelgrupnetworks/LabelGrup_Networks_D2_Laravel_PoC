@@ -18,11 +18,11 @@ class AuthController extends Controller
     public function register(RegisterUserRequest $request, CreateUserAction $createUserAction): JsonResponse
     {
         $data = new UserData(...$request->validated());
-        ($createUserAction)($data);
+        $user = ($createUserAction)($data);
         return response()
             ->json([
                 'message' => 'You have registered successfully! To get your token log in using your email and password.',
-                'location' => 'https://foo/bar', // TODO: send route for view user
+                'location' => route('api.users.show', $user),
             ], 201);
     }
 

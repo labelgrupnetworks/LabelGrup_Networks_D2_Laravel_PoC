@@ -43,6 +43,9 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'api.users.update'])->syncRoles([$adminRole, $moderatorRole]);
         Permission::create(['name' => 'api.users.destroy'])->syncRoles([$adminRole]);
 
+        // Profile
+        Permission::create(['name' => 'api.profile.index'])->syncRoles([$adminRole, $moderatorRole, $sellerRole]);
+
         // Images
         Permission::create(['name' => 'api.images.index'])->syncRoles([$adminRole, $moderatorRole]);
         Permission::create(['name' => 'api.images.show'])->syncRoles([$adminRole, $moderatorRole]);
