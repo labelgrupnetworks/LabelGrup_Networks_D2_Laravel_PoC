@@ -22,13 +22,15 @@ class DatabaseSeeder extends Seeder
 
         $categories = Category::factory(10)->create();
 
-        Product::factory(100)
+        Product::factory(50)
             ->create()
             ->each(function (Product $product) use ($categories) {
                 $product
                     ->categories()
                     ->attach($categories->random(3)->pluck('id')->toArray());
             });
+
+        $this->call(RoleSeeder::class);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

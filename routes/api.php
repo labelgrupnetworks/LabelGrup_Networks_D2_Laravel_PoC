@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function (){
         ->name('api.product-categories.index');
 
     Route::post('product-categories/{product}/create', [ProductCategoryController::class, 'store'])
-        ->name('api.product-categories.create');
+        ->name('api.product-categories.store');
 
     Route::patch('product-categories/{product}/update', [ProductCategoryController::class, 'update'])
         ->name('api.product-categories.update');
