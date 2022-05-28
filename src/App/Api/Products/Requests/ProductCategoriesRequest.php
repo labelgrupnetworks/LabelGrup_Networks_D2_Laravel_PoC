@@ -4,12 +4,13 @@ namespace App\Api\Products\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductsCategoryRequest extends FormRequest
+class ProductCategoriesRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'categories' => 'required|string|regex:/^[\d\s,]*$/'
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id'
         ];
     }
 }

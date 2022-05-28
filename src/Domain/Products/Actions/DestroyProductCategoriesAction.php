@@ -10,8 +10,8 @@ class DestroyProductCategoriesAction
 {
     public function __invoke(ProductCategoriesData $data, Product $product): Collection
     {
-        $categoriesIds = explode(',', $data->categories);
-        $product->categories()->detach($categoriesIds);
+        $categoriesFromRequest = $data->categories;
+        $product->categories()->detach($categoriesFromRequest);
         $product->refresh();
 
         return $product->categories;

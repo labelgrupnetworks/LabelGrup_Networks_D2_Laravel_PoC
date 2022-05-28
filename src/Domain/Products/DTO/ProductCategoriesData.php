@@ -4,9 +4,9 @@ namespace Domain\Products\DTO;
 
 use Domain\Shared\Interfaces\IData;
 
-class ProductCategoriesData
+class ProductCategoriesData implements IData
 {
     public function __construct(
-        public string $categories,
+        public array $categories,
     ){}
 }
