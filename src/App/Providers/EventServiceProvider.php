@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Domain\Categories\Models\Category;
+use Domain\Categories\Observers\CategoryObserver;
 use Domain\Products\Models\Product;
 use Domain\Products\Observers\ProductObserver;
 use Illuminate\Auth\Events\Registered;
@@ -30,6 +32,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Product::observe(ProductObserver::class);
+        Category::observe(CategoryObserver::class);
     }
 
     /**
