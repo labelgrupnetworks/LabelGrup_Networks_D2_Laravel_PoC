@@ -12,5 +12,7 @@ class ProductData implements IData
         public ?float $price = null,
         public ?int $stock = null,
         public ?array $images = null,
+        public ?array $categories = null,
+        public ?int $category_main = null,
     ){}
 }

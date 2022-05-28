@@ -2,7 +2,7 @@
 
 namespace App\Api\Products\Controllers;
 
-use App\Api\Products\Requests\ProductsCategoryRequest;
+use App\Api\Products\Requests\ProductCategoriesRequest;
 use App\Api\Products\Resources\ProductCategoryCollection;
 use App\Http\Controllers\Controller;
 use Domain\Products\Actions\CreateProductCategoriesAction;
@@ -20,14 +20,14 @@ class ProductCategoryController extends Controller
         return ProductCategoryCollection::make($categories);
     }
 
-    public function store(Product $product, ProductsCategoryRequest $request, CreateProductCategoriesAction $createProductCategoriesAction): ProductCategoryCollection
+    public function store(Product $product, ProductCategoriesRequest $request, CreateProductCategoriesAction $createProductCategoriesAction): ProductCategoryCollection
     {
         $data = new ProductCategoriesData(...$request->validated());
         $categories = ($createProductCategoriesAction)($data, $product);
         return ProductCategoryCollection::make($categories);
     }
 
-    public function update(Product $product, ProductsCategoryRequest $request, UpdateProductCategoriesAction $updateProductCategoriesAction): ProductCategoryCollection
+    public function update(Product $product, ProductCategoriesRequest $request, UpdateProductCategoriesAction $updateProductCategoriesAction): ProductCategoryCollection
     {
         $data = new ProductCategoriesData(...$request->validated());
         $categories = ($updateProductCategoriesAction)($data, $product);
@@ -37,7 +37,7 @@ class ProductCategoryController extends Controller
     /**
      * @throws Throwable
      */
-    public function destroy(Product $product, ProductsCategoryRequest $request, DestroyProductCategoriesAction $destroyProductCategoriesAction): ProductCategoryCollection
+    public function destroy(Product $product, ProductCategoriesRequest $request, DestroyProductCategoriesAction $destroyProductCategoriesAction): ProductCategoryCollection
     {
         $data = new ProductCategoriesData(...$request->validated());
         $categories = ($destroyProductCategoriesAction)($data, $product);

@@ -13,7 +13,10 @@ class UpdateProductRequest extends FormRequest
             'description' => 'nullable|string',
             'price' => 'nullable|numeric',
             'stock' => 'nullable|integer',
-            'images' => 'nullable|array'
+            'images' => 'nullable|array',
+            'categories' => 'nullable|array',
+            'categories.*' => 'nullable|exists:categories,id',
+            'category_main' => 'nullable|exists:categories,id',
         ];
     }
 }

@@ -14,6 +14,9 @@ class CreateProductRequest extends FormRequest
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'images' => 'nullable|array',
+            'categories' => 'nullable|array',
+            'categories.*' => 'nullable|exists:categories,id',
+            'category_main' => 'nullable|exists:categories,id',
         ];
     }
 }
