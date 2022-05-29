@@ -13,7 +13,8 @@ class CreateProductRequest extends FormRequest
             'description' => 'required|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
-            'images' => 'nullable|array',
+            'images' => 'nullable|array',//TODO mime types
+            'images.*' => 'nullable|mimes:jpg,jpeg,png',
             'categories' => 'nullable|array',
             'categories.*' => 'nullable|exists:categories,id',
             'category_main' => 'nullable|exists:categories,id',

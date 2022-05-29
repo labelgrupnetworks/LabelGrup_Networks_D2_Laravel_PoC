@@ -14,6 +14,7 @@ class UpdateProductRequest extends FormRequest
             'price' => 'nullable|numeric',
             'stock' => 'nullable|integer',
             'images' => 'nullable|array',
+            'images.*' => 'nullable|mimes:jpg,jpeg,png',
             'categories' => 'nullable|array',
             'categories.*' => 'nullable|exists:categories,id',
             'category_main' => 'nullable|exists:categories,id',

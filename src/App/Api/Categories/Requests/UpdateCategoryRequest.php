@@ -12,6 +12,7 @@ class UpdateCategoryRequest extends FormRequest
             'name' => 'nullable|string',
             'description' => 'nullable|string',
             'images' => 'nullable|array',
+            'images.*' => 'nullable|mimes:jpg,jpeg,png',
         ];
     }
 }

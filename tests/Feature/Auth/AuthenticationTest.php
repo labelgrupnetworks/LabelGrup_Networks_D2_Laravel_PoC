@@ -14,7 +14,7 @@ class AuthenticationTest extends TestCase
 
     public function test_login_response_405_without_credentials()
     {
-        $response = $this->get('api/login');
+        $response = $this->get('api/v1/login');
 
         $response->assertStatus(405);
     }
@@ -23,7 +23,7 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->post('/register', [
+        $this->post('/api/v1/register', [
             'name' => $user->name,
             'email' => $user->email,
             'password' => $user->password,

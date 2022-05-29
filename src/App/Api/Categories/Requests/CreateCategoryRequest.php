@@ -12,6 +12,7 @@ class CreateCategoryRequest extends FormRequest
             'name' => 'required|string',
             'description' => 'nullable|string',
             'images' => 'nullable|array',
+            'images.*' => 'nullable|mimes:jpg,jpeg,png',
         ];
     }
 }
