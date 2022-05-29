@@ -16,7 +16,7 @@ class CreateUserAction
             'password' => Hash::make($data->password),
         ]);
 
-        if (auth()->user()->hasRole('admin') && !is_null($data->role)){
+        if (auth()->user()?->hasRole('admin') && !is_null($data->role)){
             $user->syncRoles([$data->role]);
         }
 

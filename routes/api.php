@@ -29,7 +29,7 @@ Route::post('login', [AuthController::class, 'login'])->name('api.auth.login');
 
 Route::middleware('auth:sanctum')->group(function (){
     // Auth
-    Route::get('logout', [AuthController::class, 'logout'])->name('api.auth.logout');
+    Route::post('logout', [AuthController::class, 'logout'])->name('api.auth.logout');
 
     // Products, Categories and Users
     Route::apiResource('products', ProductController::class,['names' => 'api.products']);

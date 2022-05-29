@@ -19,7 +19,7 @@ class AuthController extends Controller
     {
         $data = new UserData(...$request->validated());
         $user = ($createUserAction)($data);
-        $user->assginRole('seller');
+        $user->syncRoles(['seller']);
         return response()
             ->json([
                 'message' => 'You have registered successfully! To get your token log in using your email and password.',

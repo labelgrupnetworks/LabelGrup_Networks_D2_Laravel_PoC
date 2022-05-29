@@ -13,9 +13,6 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-
-        User::factory(10)->create();
-
         $categories = Category::factory(10)->create();
 
         Product::factory(50)
@@ -27,6 +24,11 @@ class DatabaseSeeder extends Seeder
             });
 
         $this->call(RoleSeeder::class);
+
+        User::factory(10)->create()->each(function (User $user){
+            $user->assignRole('seller');
+        });
+
         $this->call(UserSeeder::class);
     }
 }
