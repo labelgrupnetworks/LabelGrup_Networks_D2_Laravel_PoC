@@ -13,6 +13,10 @@ class UpdateUserAction
         $data = ClearNullOnUpdatesService::execute($data);
         $user->fill($data);
 
+        if (auth()->user()->hasRole('admin') && isset($data['role'])){
+            $user->syncRoles([$data['role']]);
+        }
+
         return $user;
     }
 }

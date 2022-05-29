@@ -10,10 +10,16 @@ class CreateUserAction
 {
     public function __invoke(UserData $data): User
     {
-        return User::create([
+        $user = User::create([
             'name' => $data->name,
             'email' => $data->email,
             'password' => Hash::make($data->password),
         ]);
+
+        if (auth()->user()->hasRole('admin') && !is_null($data->role)){
+            $user->syncRoles([$data->role]);
+        }
+
+        return $user;
     }
 }

@@ -12,6 +12,7 @@ class CreateUserRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string',
+            'role' => 'nullable|string|in:admin,moderator,seller',
         ];
     }
 }

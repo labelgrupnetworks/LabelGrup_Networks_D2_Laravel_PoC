@@ -53,6 +53,7 @@ class User extends Authenticatable
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'role' => $this->getRoleNames()[0],
             'created-at' => $this->created_at->format('d-m-Y'),
             'updated-at' => $this->updated_at->format('d-m-Y'),
         ];
