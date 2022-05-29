@@ -1,4 +1,4 @@
-# Laravel - Candidato: {>> Nombre <<}
+# Laravel - Candidato: {>> Jose Antonio Pino <<}
 
 La prueba consiste en realizar, de forma totalmente libre, un proyecto que cumpla con todos los puntos definidos a continuación:
 
@@ -19,3 +19,13 @@ Puntos de valoración extra:
 - Valoración de principios SOLID, clean code y estándar PSR
 - Uso de algún Test (PHPunit) a modo de ejemplo
 - Arquitectura Hexagonal
+
+## Documentation
+- Clone repository
+- Rename env.example -> .env
+- cd project/directory
+- run `sail up` Laravel Sail documentation -> https://laravel.com/docs/9.x/sail
+- run `sail composer install`
+- run `sail artisan migrate --seed`
+- run `sudo nano /etc/hosts` and include label-grup.test in your hosts file.
+- Api documentation is in: https://documenter.getpostman.com/view/5719432/Uz5AryXH
