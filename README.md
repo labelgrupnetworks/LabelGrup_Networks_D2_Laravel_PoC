@@ -2,7 +2,7 @@
 
 La prueba consiste en realizar, de forma totalmente libre, un proyecto que cumpla con todos los puntos definidos a continuación:
 
-- Laravel 9.X.
+- Laravel 9.X. / 10.X
 - Commits del proceso de desarrollo
 - Fork del proyecto con PR en finalización.
 - No hace falta una GUI/frontal.
