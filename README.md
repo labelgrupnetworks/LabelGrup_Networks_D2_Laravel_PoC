@@ -18,4 +18,3 @@ Puntos de valoración extra:
 - Relaciones polimórficas entre alguno de los modelos
 - Valoración de principios SOLID, clean code y estándar PSR
 - Uso de algún Test (PHPunit) a modo de ejemplo
-- Arquitectura Hexagonal
