@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = Category::factory()->count(10)->create();
+        Category::factory()->count(10)->create();
 
         User::factory()
             ->count(5)
@@ -35,7 +35,11 @@ class DatabaseSeeder extends Seeder
 
         foreach ($products as $product) {
             $categories = Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
-            $product->categories()->attach($categories);
+            $isMain = true;
+            foreach ($categories as $category) {
+                $product->categories()->attach($category, ['is_main' => $isMain]);
+                $isMain = false;
+            }
         }
     }
 }
