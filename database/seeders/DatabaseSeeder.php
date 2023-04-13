@@ -8,7 +8,6 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,6 +27,9 @@ class DatabaseSeeder extends Seeder
                             ->count(3)
                     )
                     ->count(20)
+                    ->state(function (array $attributes, User $user) {
+                        return ['user_id' => $user->id];
+                    })
             )
             ->create();
 
@@ -40,6 +42,22 @@ class DatabaseSeeder extends Seeder
                 $product->categories()->attach($category, ['is_main' => $isMain]);
                 $isMain = false;
             }
+        }
+
+        $user = User::find(1);
+
+        $user->assignRole(User::ADMINISTRATOR);
+
+        $users = User::whereIn('id', [2, 3])->get();
+
+        foreach ($users as $user) {
+            $user->assignRole(User::MODERATOR);
+        }
+
+        $users = User::whereIn('id', [4, 5])->get();
+
+        foreach ($users as $user) {
+            $user->assignRole(User::COMMERCIAL);
         }
     }
 }

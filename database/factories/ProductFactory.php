@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,6 +25,7 @@ class ProductFactory extends Factory
             'description' => fake()->sentence(),
             'stock' => fake()->numberBetween(2, 10),
             'price' => fake()->numberBetween(10 * Product::PER_CENT, 200 * Product::PER_CENT),
+            //'user_id' => fake()->numberBetween(1, 6),
         ];
     }
 }

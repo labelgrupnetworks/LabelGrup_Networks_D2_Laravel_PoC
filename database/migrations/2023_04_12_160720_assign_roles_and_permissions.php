@@ -1,13 +1,11 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,50 +13,34 @@ return new class extends Migration
     {
         // TODO: Extract them to dedicated class for each role and assign permissions.
 
-        $permissions = [
-            'read:products', 'create:products', 'update:products', 'delete:products',
-            'read:images', 'create:images', 'update:images', 'delete:images',
-            'read:categories', 'create:categories', 'update:categories', 'delete:categories',
-        ];
+        $permissions = User::rolePermissions();
 
         foreach ($permissions as $permission) {
-            $permission = Permission::create(['name' => $permission]);
+            Permission::create(['name' => $permission]);
         }
 
-        $administratorPermissions = [
-            'read:products', 'create:products', 'update:products', 'delete:products',
-            'read:images', 'create:images', 'update:images', 'delete:images',
-            'read:categories', 'create:categories', 'update:categories', 'delete:categories',
-        ];
+        $administratorPermissions = User::administratorPermissions();
 
         $role = Role::create([
-            'name' => 'administrator',
+            'name' => User::ADMINISTRATOR,
         ]);
 
-        $role->givePermissionTo(Permission::all());
+        $role->givePermissionTo($administratorPermissions);
 
-        $moderatorPermissions = [
-            'read:products', 'create:products', 'update:products',
-            'read:images', 'create:images', 'update:images',
-            'read:categories', 'create:categories', 'update:categories',
-        ];
+        $moderatorPermissions = User::moderatorPermissions();
 
         $role = Role::create([
-            'name' => 'moderator',
+            'name' => User::MODERATOR,
         ]);
 
         foreach ($moderatorPermissions as $permission) {
             $role->givePermissionTo($permission);
         }
 
-        $commercialsPermissions = [
-            'read:products',
-            'read:images',
-            'read:categories',
-        ];
+        $commercialsPermissions = User::commercialPermissions();
 
         $role = Role::create([
-            'name' => 'commercial',
+            'name' => User::COMMERCIAL,
         ]);
 
         foreach ($commercialsPermissions as $permission) {

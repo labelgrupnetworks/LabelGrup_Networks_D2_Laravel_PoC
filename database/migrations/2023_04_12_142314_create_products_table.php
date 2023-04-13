@@ -17,7 +17,8 @@ return new class extends Migration
             $table->text('description');
             $table->integer('stock');
             $table->integer('price');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

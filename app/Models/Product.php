@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Database\Factories\ProductFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,5 +45,13 @@ class Product extends Model
     protected static function newFactory(): Factory
     {
         return ProductFactory::new();
+    }
+
+    public function price(): Attribute
+    {
+        return Attribute::make(
+            get: fn (int $price) => $price / self::PER_CENT,
+            set: fn (float $price) => $price * self::PER_CENT
+        );
     }
 }

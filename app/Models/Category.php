@@ -22,6 +22,7 @@ class Category extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+
     protected static function newFactory(): Factory
     {
         return CategoryFactory::new();
