@@ -5,7 +5,7 @@
 Descargar repositorio
 
 ```bash
-git clone <reppository>
+git clone <repository>
 ```
 - Descargar dependencias
     ```bash
