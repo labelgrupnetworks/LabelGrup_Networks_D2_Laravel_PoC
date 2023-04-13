@@ -1,8 +1,43 @@
-# Laravel - Candidato: {>> Nombre <<}
+# Laravel - Candidato: Shuangjie Xia
+
+## Instrucción para seguir
+
+Descargar repositorio
+
+```bash
+git clone <reppository>
+```
+
+Copiar `.env.example` a `.env`. 
+Abrir y configurar las credencailes `DB_DATABASE` `DB_USERNAME` `DB_PASSWORD`
+```bash
+php artisan migrate:fresh --seed
+```
+Crear fake data.
+
+Teneis 3 cuentas con diferentes rol
+
+| email      |
+| ----------- |
+| administrator@administrator.test      |
+| moderator@moderator.test   |
+| commercial@commercial.test   |
+
+Comparten una misma contraseña `password`. Los `roles` y `permisos` está definido temporalmente dentro `app\Models\User.php`.
+
+También debe ejecutar el commando siguiente, crear un enlace simbólico desde public/storage a storage/app/pubic para los imágenes de productos.
+
+```bash
+php artisan storage:link
+```
+
+
+---------------------
+---------------------
 
 La prueba consiste en realizar, de forma totalmente libre, un proyecto que cumpla con todos los puntos definidos a continuación:
 
-- Laravel 9.X. / 10.X
+- Laravel used: 10.7.1 with PHP 8.2.4
 - Commits del proceso de desarrollo
 - Fork del proyecto con PR en finalización.
 - No hace falta una GUI/frontal.
