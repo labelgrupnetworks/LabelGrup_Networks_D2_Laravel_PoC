@@ -7,13 +7,12 @@ Descargar repositorio
 ```bash
 git clone <reppository>
 ```
-
-Copiar `.env.example` a `.env`. 
-Abrir y configurar las credencailes `DB_DATABASE` `DB_USERNAME` `DB_PASSWORD`
-```bash
-php artisan migrate:fresh --seed
-```
-Crear fake data.
+- Descargar dependencias
+    ```bash
+    composer install
+    ```
+- Copiar `.env.example` a `.env`. 
+- Abrir y configurar las credencailes `DB_DATABASE` `DB_USERNAME` `DB_PASSWORD`
 
 Teneis 3 cuentas con diferentes rol
 
@@ -24,6 +23,17 @@ Teneis 3 cuentas con diferentes rol
 | commercial@commercial.test   |
 
 Comparten una misma contraseña `password`. Los `roles` y `permisos` está definido temporalmente dentro `app\Models\User.php`.
+
+Ejecutar 
+```bash
+php artisan key:generate
+```
+
+Crear datos.
+```bash
+php artisan migrate:fresh --seed
+```
+
 
 También debe ejecutar el commando siguiente, crear un enlace simbólico desde public/storage a storage/app/pubic para los imágenes de productos.
 
