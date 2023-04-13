@@ -41,6 +41,14 @@ También debe ejecutar el commando siguiente, crear un enlace simbólico desde p
 php artisan storage:link
 ```
 
+Encender servidor
+
+```bash
+php artisan serve
+```
+
+Debe llamar `[POST] YOUR_HOST/api/login` con credenciales proporcionado arriba para obtener token y en futuras peticiones siempre debe adjuntar este token en formato `Bearer YOUR_TOKEN`
+
 
 ---------------------
 ---------------------
