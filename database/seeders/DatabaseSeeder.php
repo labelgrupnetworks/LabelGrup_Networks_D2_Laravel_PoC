@@ -59,5 +59,31 @@ class DatabaseSeeder extends Seeder
         foreach ($users as $user) {
             $user->assignRole(User::COMMERCIAL);
         }
+
+        $this->defineCustomUsers();
+    }
+
+    private function defineCustomUsers(): void
+    {
+        $administrator = User::factory()
+            ->create([
+                'email' => 'administrator@administrator.test'
+            ]);
+
+        $administrator->assignRole(User::ADMINISTRATOR);
+
+        $moderator = User::factory()
+            ->create([
+                'email' => 'moderator@moderator.test'
+            ]);
+
+        $moderator->assignRole(User::MODERATOR);
+
+        $commercial = User::factory()
+            ->create([
+                'email' => 'commercial@commercial.test'
+            ]);
+
+        $moderator->assignRole(User::COMMERCIAL);
     }
 }
