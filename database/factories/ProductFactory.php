@@ -21,11 +21,10 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->unique()->name(),
             'description' => fake()->sentence(),
             'stock' => fake()->numberBetween(2, 10),
             'price' => fake()->numberBetween(10 * Product::PER_CENT, 200 * Product::PER_CENT),
-            //'user_id' => fake()->numberBetween(1, 6),
         ];
     }
 }
