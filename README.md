@@ -47,8 +47,12 @@ Encender servidor
 php artisan serve
 ```
 
-Debe llamar `[POST] YOUR_HOST/api/login` con credenciales proporcionado arriba para obtener token y en futuras peticiones siempre debe adjuntar este token en formato `Bearer YOUR_TOKEN`
+Para mostrar todas las rutas disponibles
+```bash
+php artisan route:list
+```
 
+Debe llamar `[POST] YOUR_HOST/api/login` con credenciales proporcionado arriba para obtener token y en futuras peticiones siempre debe adjuntar este token en formato `Bearer YOUR_TOKEN`
 
 ---------------------
 ---------------------
