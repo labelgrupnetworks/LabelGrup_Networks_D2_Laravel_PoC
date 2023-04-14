@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// Controllers
+use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,9 +19,17 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
+Route::post('logout', [UserController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('insert-category', [CategoryController::class, 'insert'])->middleware(First::class);
+    // Categories
+    Route::get('categories', [CategoryController::class, 'find']);
+    Route::get('get-category', [CategoryController::class, 'findOne']);
+    Route::post('new-category', [CategoryController::class, 'create']);
+    Route::post('edit-category', [CategoryController::class, 'edit']);
+    Route::post('delete-category', [CategoryController::class, 'delete']);
+});
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
