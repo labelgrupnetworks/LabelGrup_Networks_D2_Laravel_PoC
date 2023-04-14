@@ -7,7 +7,6 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 
 //Requests
 use App\Http\Requests\Category\CategoryCreateRequest;
@@ -19,7 +18,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function find()
+    public function find() : JsonResponse
     {
         $categories = Category::get();
 

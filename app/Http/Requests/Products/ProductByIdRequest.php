@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Products;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryEditRequest extends FormRequest
+class ProductByIdRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,8 +16,7 @@ class CategoryEditRequest extends FormRequest
 
     public function attributes() {
         return [
-            'id_category' => 'id de la categoria',
-            'name' => 'nombre de la categoria',
+            'id_product' => 'id del producto',
         ];
     }
 
@@ -28,15 +27,13 @@ class CategoryEditRequest extends FormRequest
      */
     public function rules(): array {
         return [
-            'id_category' => 'required',
-            'name' => 'required|max:254',
+            'id_product' => 'required',
         ];
     }
 
     public function messages() {
         return [
-            'name.required' => 'El :attribute es obligatorio.',
-            'id_category.required' => 'El :attribute es obligatorio.'
+            'id_product.required' => 'El :attribute es obligatorio.'
         ];
     }
 }

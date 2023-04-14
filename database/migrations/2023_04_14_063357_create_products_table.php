@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("description");
             $table->unsignedInteger("id_category");
-            $table->text("secondary_categories");
-            $table->string("img")->default("null");
+            $table->text("secondary_categories")->default('[]');
             $table->integer("price");
             $table->integer("stock");
             $table->timestamps();

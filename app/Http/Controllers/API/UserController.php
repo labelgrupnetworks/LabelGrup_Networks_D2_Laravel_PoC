@@ -16,7 +16,10 @@ class UserController extends Controller
 {
     public function register(UserRegisterRequest $request) : JsonResponse
     {
-        if(User::create($request->validated())) {
+        $validated = $request->validated();
+        $validated["password"] = Hash::make($validated["password"]);
+        
+        if(User::create($validated)) {
             return response()->json([
                 "success" => true
             ], Response::HTTP_OK);

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 // Controllers
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\UserController;
 
 /*
@@ -28,6 +29,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('new-category', [CategoryController::class, 'create']);
     Route::post('edit-category', [CategoryController::class, 'edit']);
     Route::post('delete-category', [CategoryController::class, 'delete']);
+
+    // Products
+    Route::get('products', [ProductController::class, 'find']);
+    Route::get('get-product', [ProductController::class, 'findOne']);
+    Route::post('new-product', [ProductController::class, 'store']);
+    Route::post('edit-product', [ProductController::class, 'edit']);
+    Route::post('delete-product', [ProductController::class, 'delete']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
