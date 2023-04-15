@@ -1,4 +1,31 @@
-# Laravel - Candidato: {Alex Madrigal Alriols}
+# Laravel - Candidato: {>> Nombre <<}
+
+# Comandos a seguir:
+
+Para Seedear y crear la base de datos:
+```bash
+php artisan migrate:fresh --seed
+```
+
+Para linkear el storage(para el guardado de imagenes):
+```bash
+php artisan storage:link
+```
+
+Encender el servidor
+```bash
+php artisan serve
+```
+
+Primero de todo es necesario hacer el login en api/login y usar ese token en Bearer. Token. Para todas las request siguientes.
+Hay un sistema de roles, es decir no todos los usuarios pueden realizar todas las acciones.
+
+Hay 3 cuentas creadas con cada rol
+admin@alex.com - password
+moderator@alex.com - password
+comercial@alex.com - password
+
+## RECOMENDABLE USAR EL ARCHIVO DE COLLECTIONS DE POSTMAN AÑADIDO EN LA CARPETA CollectionLabelGrup.postman_collection.json
 
 La prueba consiste en realizar, de forma totalmente libre, un proyecto que cumpla con todos los puntos definidos a continuación:
 

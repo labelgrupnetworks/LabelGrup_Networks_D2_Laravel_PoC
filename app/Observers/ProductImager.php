@@ -1,24 +1,26 @@
 <?php 
 namespace App\Observers;
 
+use App\Http\Controllers\API\ImageController;
 use App\Models\Image;
 use App\Models\Product;
 
 class ProductImager
 {
+
     public function created(Product $product): void
     {
-        if (request()->has('images')) {
-            $storagePath = 'public/images';
+        $this->createFiles($product);
+    }
 
-            foreach (request()->file('images') as $img) {
-                $path = $img->storeAs($storagePath, $img->hashName());
+    public function updated(Product $product): void
+    {
+        Image::where('id_product', '=', $product->id_product)->delete();
 
-                Image::create([
-                    'file' => $path,
-                    'id_product' => $product->id_product
-                ]);
-            }
-        }
+        $this->createFiles($product);
+    }
+
+    public function createFiles(Product $product) {
+        (new ImageController)->store(request(), $product);
     }
 }

@@ -5,7 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 
 use App\Observers\ProductImager;
+use App\Observers\UserObserver;
 use App\Models\Product;
+use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Product::observe(ProductImager::class);
+        User::observe(UserObserver::class);
     }
 }

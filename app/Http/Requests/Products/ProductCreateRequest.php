@@ -28,7 +28,7 @@ class ProductCreateRequest extends FormRequest
             'secondary_categories'  => '',
             'price'                 => 'required|numeric',
             'stock'                 => 'numeric|min:0',
-            'images'                => 'image'
+            'images'                => ''
         ];
     }
 }

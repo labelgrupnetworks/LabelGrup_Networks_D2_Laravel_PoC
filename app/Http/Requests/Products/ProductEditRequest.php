@@ -26,10 +26,10 @@ class ProductEditRequest extends FormRequest
             'name'                  => 'max:255',
             'description'           => 'max:255',
             'id_category'           => 'exists:categories,id_category',
-            'secondary_categories'  => 'array|exists:categories,id_category',
+            'secondary_categories'  => '',
             'price'                 => 'numeric',
             'stock'                 => 'numeric|min:0',
-            'images'                => 'nulleable'
+            'images'                => ''
         ];
     }
 }

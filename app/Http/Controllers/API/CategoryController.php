@@ -48,7 +48,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function create(CategoryCreateRequest $request) : JsonResponse
+    public function store(CategoryCreateRequest $request) : JsonResponse
     {
         if($category = Category::create($request->validated())) {
             return response()->json([
@@ -62,11 +62,11 @@ class CategoryController extends Controller
         ], Response::HTTP_BAD_REQUEST);
     }
 
-    public function edit(CategoryEditRequest $request) : JsonResponse
+    public function update(CategoryEditRequest $request) : JsonResponse
     {
         $validated = $request->validated();
 
-        if($category = Category::findOrFail($validated["id_category"])) {
+        if($category = Category::find($validated["id_category"])) {
             $category->fill($validated);
 
             if($category->save()) {
@@ -84,13 +84,13 @@ class CategoryController extends Controller
     public function delete(CategoryByIdRequest $request) : JsonResponse
     {
         $request = $request->validated();
-
-        $category = Category::findOrFail($request["id_category"]);
-
-        if($category->delete()) {
-            return response()->json([
-                "success"=> true
-            ], Response::HTTP_OK);
+        
+        if($category = Category::find($request["id_category"])) {
+            if($category->delete()) {
+                return response()->json([
+                    "success"=> true
+                ], Response::HTTP_OK);
+            }
         }
 
         return response()->json([
