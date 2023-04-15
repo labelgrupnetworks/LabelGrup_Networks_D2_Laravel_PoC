@@ -1,4 +1,4 @@
-# Laravel - Candidato: {>> Nombre <<}
+# Laravel - Candidato: {>> Alex Madrigal Alriols <<}
 
 # Comandos a seguir:
 
