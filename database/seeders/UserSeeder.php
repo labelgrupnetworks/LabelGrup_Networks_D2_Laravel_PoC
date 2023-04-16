@@ -20,6 +20,25 @@ class UserSeeder extends Seeder
     {
         //User::factory(10)->create();
 
+        // create permissions for products
+        Permission::create(['name' => 'edit product']);
+        Permission::create(['name' => 'delete product']);
+        Permission::create(['name' => 'create product']);
+        Permission::create(['name' => 'get product']);
+        Permission::create(['name' => 'assign categories']);
+
+        // create permissions for categories
+        Permission::create(['name' => 'edit category']);
+        Permission::create(['name' => 'delete category']);
+        Permission::create(['name' => 'create category']);
+        Permission::create(['name' => 'get category']);
+
+        // create permissions for images
+        Permission::create(['name' => 'edit image']);
+        Permission::create(['name' => 'delete image']);
+        Permission::create(['name' => 'create image']);
+        Permission::create(['name' => 'get image']);
+
         $admin=User::create([
             'name'=>'Admin',
             'email'=>'administrador@labelgrup.com',
@@ -28,6 +47,9 @@ class UserSeeder extends Seeder
 
         $rol_admin=Role::where('name', 'Administrador')->first();
         $admin->assignRole($rol_admin);
+        $rol_admin->givePermissionTo(['edit product', 'delete product', 'create product', 'get product', 'assign categories']);
+        $rol_admin->givePermissionTo(['edit category', 'delete category', 'create category', 'get category']);
+        $rol_admin->givePermissionTo(['edit image', 'delete image', 'create image', 'get image']);
 
         $moderator=User::create([
             'name'=>'Moderator',
@@ -38,6 +60,10 @@ class UserSeeder extends Seeder
         $rol_moderator=Role::where('name', 'Moderador')->first();
         $moderator->assignRole($rol_moderator);
 
+        $rol_moderator->givePermissionTo(['edit product', 'create product', 'get product', 'assign categories']);
+        $rol_moderator->givePermissionTo(['edit category', 'create category', 'get category']);
+        $rol_moderator->givePermissionTo(['edit image', 'create image', 'get image']);
+
         $commercial=User::create([
             'name'=>'Comercial',
             'email'=>'comercial@labelgrup.com',
@@ -46,5 +72,8 @@ class UserSeeder extends Seeder
 
         $rol_commercial=Role::where('name', 'Comercial')->first();
         $commercial->assignRole($rol_commercial);
+        $rol_moderator->givePermissionTo([ 'create product', 'get product']);
+        $rol_moderator->givePermissionTo([ 'create category', 'get category']);
+        $rol_moderator->givePermissionTo([ 'create image', 'get image']);
     }
 }
