@@ -9,7 +9,6 @@ use Illuminate\Http\Response;
 use App\Http\Requests\ImageRequest;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Helpers\Helpers;
 
 class ImageController extends Controller
 {
@@ -20,12 +19,21 @@ class ImageController extends Controller
      */
     public function index()
     {
-        $images = Image::all();
+        $user = Auth::user();
+        if($user->hasDirectPermission('get image'))
+        {
+            $images = Image::all();
 
-        return response()->json([
-            'status'    => true,
-            'images'    => $images
-        ]);
+            return response()->json([
+                'status'    => true,
+                'images'    => $images
+            ]);
+        } else {
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User doesnt have permission to this action'
+            ], 200);
+        }
     }
 
     /**
@@ -36,21 +44,30 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        // Store the file inside storage
-        $path = $request->file('url')->store('public/images');
+        $user = Auth::user();
+        if($user->hasDirectPermission('create image'))
+        {
+            // Store the file inside storage
+            $path = $request->file('url')->store('public/images');
 
-        $image = Image::create([
-            'imageable_id'  => $request->imageable_id,
-            'imageable_type'  => $request->imageable_type,
-            'description'  => $request->description,
-            'url'   => $path
-        ]);
+            $image = Image::create([
+                'imageable_id'  => $request->imageable_id,
+                'imageable_type'  => $request->imageable_type,
+                'description'  => $request->description,
+                'url'   => $path
+            ]);
 
-        return response()->json([
-            'status'    => true,
-            'message'   => 'Image uploaded successfully',
-            'image'     => $image
-        ], 200);
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Image uploaded successfully',
+                'image'     => $image
+            ], 200);
+        } else {
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User doesnt have permission to this action'
+            ], 200);
+        }
     }
 
     /**
@@ -73,22 +90,30 @@ class ImageController extends Controller
      */
     public function update(Request $request,  $image_id)
     {
-        // Store the file inside storage
+        $user = Auth::user();
+        if($user->hasDirectPermission('update image'))
+        {
+            // Store the file inside storage
+            $image = Image::find($image_id);
+            $path = $request->file('url')->store('public/images');
 
-        $image = Image::find($image_id);
-        $path = $request->file('url')->store('public/images');
 
+            $image->update([
+                'description'  => $request->description,
+                'url'   => $path
+            ]);
 
-        $image->update([
-            'description'  => $request->description,
-            'url'   => $path
-        ]);
-
-        return response()->json([
-            'status'    => true,
-            'message'   => 'Image updated successfully',
-            'image'     => $image
-        ], 200);
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Image updated successfully',
+                'image'     => $image
+            ], 200);
+        } else {
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User doesnt have permission to this action'
+            ], 200);
+        }
     }
 
     /**
@@ -99,9 +124,9 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-
-        $isAdmin = Helpers::isAdmin();
-        if($isAdmin){
+        $user = Auth::user();
+        if($user->hasDirectPermission('delete image'))
+        {
            // Check if file exists then delete record
             if(File::exists($image->url)) {
                 File::delete($image->url);
@@ -116,7 +141,7 @@ class ImageController extends Controller
         }else{
             return response()->json([
                 'status'    => true,
-                'message'   => 'Only Administrador or Moderador rol can delete'
+                'message'   => 'User doesnt have permission to this action'
             ], 200);
         }
 

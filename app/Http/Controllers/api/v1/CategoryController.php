@@ -7,7 +7,6 @@ use App\Models\api\v1\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Helpers\Helpers;
 
 class CategoryController extends Controller
 {
@@ -18,12 +17,22 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $user = Auth::user();
 
-        return response()->json([
-            'status'        => true,
-            'categories'    => $categories
-        ]);
+        if($user->hasDirectPermission('create category'))
+        {
+            $categories = Category::all();
+
+            return response()->json([
+                'status'        => true,
+                'categories'    => $categories
+            ]);
+        }else {
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User doesnt have permission to this action'
+            ], 200);
+        }
     }
 
     /**
@@ -34,13 +43,23 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::create($request->all());
+        $user = Auth::user();
 
-        return response()->json([
-            'status'    => true,
-            'message'   => 'Category created successfully',
-            'category'  => $category
-        ], 200);
+        if($user->hasDirectPermission('create category'))
+        {
+            $category = Category::create($request->all());
+
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Category created successfully',
+                'category'  => $category
+            ], 200);
+        }else{
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User doesnt have permission to this action'
+            ], 200);
+        }
     }
 
     /**
@@ -63,13 +82,23 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $category->update($request->all());
+        $user = Auth::user();
 
-        return response()->json([
-            'status'    => true,
-            'message'   => 'Category updated successfully',
-            'category'  => $category
-        ], 200);
+        if($user->hasDirectPermission('update category'))
+        {
+            $category->update($request->all());
+
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Category updated successfully',
+                'category'  => $category
+            ], 200);
+        }else{
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User doesnt have permission to this action'
+            ], 200);
+        }
     }
 
     /**
@@ -80,8 +109,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $isAdmin = Helpers::isAdmin();
-        if($isAdmin){
+        $user = Auth::user();
+
+        if($user->hasDirectPermission('delete category'))
+        {
             $category->delete();
 
             return response()->json([
@@ -91,7 +122,7 @@ class CategoryController extends Controller
         }else{
             return response()->json([
                 'status'    => true,
-                'message'   => 'Only Administrador or Moderador rol can delete'
+                'message'   => 'User doesnt have permission to this action'
             ], 200);
         }
 

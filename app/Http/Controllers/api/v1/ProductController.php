@@ -9,7 +9,6 @@ use App\Models\api\v1\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Helpers\Helpers;
 
 
 class ProductController extends Controller
@@ -21,14 +20,22 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
 
+        if($user->hasDirectPermission('get product'))
+        {
+            $products = Product::all();
 
-        $products = Product::all();
-
-        return response()->json([
-            'status'    => true,
-            'products'  => $products
-        ]);
+            return response()->json([
+                'status'    => true,
+                'products'  => $products
+            ]);
+        }else {
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User doesnt have permission to this action'
+            ], 200);
+        }
     }
 
     /**
@@ -39,13 +46,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = Product::create($request->all());
+        $user = Auth::user();
 
-        return response()->json([
-            'status'    => true,
-            'message'   => 'Product created successfully',
-            'products'  => $product
-        ], 200);
+        if($user->hasDirectPermission('create product'))
+        {
+            $product = Product::create($request->all());
+
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Product created successfully',
+                'products'  => $product
+            ], 200);
+        } else {
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User doesnt have permission to this action'
+            ], 200);
+        }
     }
 
     /**
@@ -68,30 +85,48 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $product->update($request->all());
+        $user = Auth::user();
 
-        return response()->json([
-            'status'    => true,
-            'message'   => 'Product updated successfully',
-            'products'  => $product
-        ], 200);
+        if($user->hasDirectPermission('update product'))
+        {
+            $product->update($request->all());
+
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Product updated successfully',
+                'products'  => $product
+            ], 200);
+        } else {
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User doesnt have permission to this action'
+            ], 200);
+        }
     }
 
     public function assignCategories($id, Request $request)
     {
+        $user = Auth::user();
+        if($user->hasDirectPermission('assign categories'))
+        {
+            $product = Product::find($id)->first();
+            foreach($request->categories as $c => $key){
 
-        $product = Product::find($id)->first();
-        foreach($request->categories as $c => $key){
+                $is_main = $key['is_main'];
+                $assign = $product->categories()->syncWithoutDetaching([$key['id'] =>   ['is_main' => $is_main]]);
+            }
 
-            $is_main = $key['is_main'];
-            $assign = $product->categories()->syncWithoutDetaching([$key['id'] =>   ['is_main' => $is_main]]);
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Categories where modified for this product successfully',
+                'product_category'  => $request->categories
+            ], 200);
+        } else {
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User doesnt have permission to this action'
+            ], 200);
         }
-
-        return response()->json([
-            'status'    => true,
-            'message'   => 'Categories where modified for this product successfully',
-            'product_category'  => $request->categories
-        ], 200);
     }
     /**
      * Remove the specified resource from storage.
@@ -101,8 +136,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $isAdmin = Helpers::isAdmin();
-        if($isAdmin){
+        $user = Auth::user();
+
+        if($user->hasDirectPermission('delete product'))
+        {
             $product->delete();
             return response()->json([
                 'status'    => true,
@@ -111,7 +148,7 @@ class ProductController extends Controller
         }else{
             return response()->json([
                 'status'    => true,
-                'message'   => 'Only Administrador or Moderador rol can delete'
+                'message'   => 'User doesnt have permission to this action'
             ], 200);
         }
     }

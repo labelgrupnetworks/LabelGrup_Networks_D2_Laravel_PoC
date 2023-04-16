@@ -47,33 +47,33 @@ class UserSeeder extends Seeder
 
         $rol_admin=Role::where('name', 'Administrador')->first();
         $admin->assignRole($rol_admin);
-        $rol_admin->givePermissionTo(['edit product', 'delete product', 'create product', 'get product', 'assign categories']);
-        $rol_admin->givePermissionTo(['edit category', 'delete category', 'create category', 'get category']);
-        $rol_admin->givePermissionTo(['edit image', 'delete image', 'create image', 'get image']);
+        $admin->givePermissionTo(['edit product', 'delete product', 'create product', 'get product', 'assign categories']);
+        $admin->givePermissionTo(['edit category', 'delete category', 'create category', 'get category']);
+        $admin->givePermissionTo(['edit image', 'delete image', 'create image', 'get image']);
 
         $moderator=User::create([
             'name'=>'Moderator',
             'email'=>'moderador@labelgrup.com',
-            'password'=>Str::random(10)
+            'password'=> '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', //password
         ]);
 
         $rol_moderator=Role::where('name', 'Moderador')->first();
         $moderator->assignRole($rol_moderator);
 
-        $rol_moderator->givePermissionTo(['edit product', 'create product', 'get product', 'assign categories']);
-        $rol_moderator->givePermissionTo(['edit category', 'create category', 'get category']);
-        $rol_moderator->givePermissionTo(['edit image', 'create image', 'get image']);
+        $moderator->givePermissionTo(['edit product', 'create product', 'get product', 'assign categories']);
+        $moderator->givePermissionTo(['edit category', 'create category', 'get category']);
+        $moderator->givePermissionTo(['edit image', 'create image', 'get image']);
 
         $commercial=User::create([
             'name'=>'Comercial',
             'email'=>'comercial@labelgrup.com',
-            'password'=>Str::random(10)
+            'password'=> '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', //password
         ]);
 
         $rol_commercial=Role::where('name', 'Comercial')->first();
         $commercial->assignRole($rol_commercial);
-        $rol_moderator->givePermissionTo([ 'create product', 'get product']);
-        $rol_moderator->givePermissionTo([ 'create category', 'get category']);
-        $rol_moderator->givePermissionTo([ 'create image', 'get image']);
+        $commercial->givePermissionTo([ 'create product', 'get product']);
+        $commercial->givePermissionTo([ 'create category', 'get category']);
+        $commercial->givePermissionTo([ 'create image', 'get image']);
     }
 }

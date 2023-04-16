@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
-use App\Http\Helpers\Helpers;
 
 class AuthController extends Controller
 {
