@@ -8,6 +8,9 @@ use App\Models\api\v1\Category;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Helpers\Helpers;
+
 
 class ProductController extends Controller
 {
@@ -18,6 +21,8 @@ class ProductController extends Controller
      */
     public function index()
     {
+
+
         $products = Product::all();
 
         return response()->json([
@@ -96,11 +101,18 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
-
-        return response()->json([
-            'status'    => true,
-            'message'   => 'Product deleted successfully'
-        ], 200);
+        $isAdmin = Helpers::isAdmin();
+        if($isAdmin){
+            $product->delete();
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Product deleted successfully'
+            ], 200);
+        }else{
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Only Administrador or Moderador rol can delete'
+            ], 200);
+        }
     }
 }

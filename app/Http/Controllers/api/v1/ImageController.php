@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\ImageRequest;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Helpers\Helpers;
 
 class ImageController extends Controller
 {
@@ -97,16 +99,27 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        // Check if file exists then delete record
-        if(File::exists($image->url)) {
-            File::delete($image->url);
+
+        $isAdmin = Helpers::isAdmin();
+        if($isAdmin){
+           // Check if file exists then delete record
+            if(File::exists($image->url)) {
+                File::delete($image->url);
+            }
+
+            $image->delete();
+
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Image deleted successfully'
+            ], 200);
+        }else{
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Only Administrador or Moderador rol can delete'
+            ], 200);
         }
 
-        $image->delete();
 
-        return response()->json([
-            'status'    => true,
-            'message'   => 'Image deleted successfully'
-        ], 200);
     }
 }

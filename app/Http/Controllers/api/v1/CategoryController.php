@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\api\v1\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Helpers\Helpers;
 
 class CategoryController extends Controller
 {
@@ -78,11 +80,21 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        $isAdmin = Helpers::isAdmin();
+        if($isAdmin){
+            $category->delete();
 
-        return response()->json([
-            'status'    => true,
-            'message'   => 'Category deleted successfully'
-        ], 200);
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Category deleted successfully'
+            ], 200);
+        }else{
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Only Administrador or Moderador rol can delete'
+            ], 200);
+        }
+
+
     }
 }

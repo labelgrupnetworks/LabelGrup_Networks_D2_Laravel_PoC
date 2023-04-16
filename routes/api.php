@@ -26,24 +26,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
-// Users crud
-Route::apiResource('users', AuthController::class);
+// protected routes
+Route::middleware('auth:api')->group(function() {
+    // Users crud
+    Route::apiResource('users', AuthController::class);
 
-// Products crud
-Route::apiResource('products', ProductController::class);
+    // Products crud
+    Route::apiResource('products', ProductController::class);
 
-// Categories crud
-Route::apiResource('categories', CategoryController::class);
+    // Categories crud
+    Route::apiResource('categories', CategoryController::class);
 
-// Assing categories to products
-Route::post('assignCategories/{id}', [ProductController::class, 'assignCategories']);
+    // Assing categories to products
+    Route::post('assignCategories/{id}', [ProductController::class, 'assignCategories']);
 
-// Images crud
-Route::apiResource('images', ImageController::class);
+    // Images crud
+    Route::apiResource('images', ImageController::class);
 
-// Need to be POST method to modify images, doesn't support PUT in form-data
-Route::post('images/{id}', [ImageController::class, 'update']);
-
+    // Need to be POST method to modify images, doesn't support PUT in form-data
+    Route::post('images/{id}', [ImageController::class, 'update']);
+});
 
 // The catch-all will match anything except the previous defined routes.
 Route::any('{catchall}', function () {
