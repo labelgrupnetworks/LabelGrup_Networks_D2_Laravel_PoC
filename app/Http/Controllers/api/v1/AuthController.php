@@ -3,9 +3,16 @@
 namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
+
+use App\Models\User;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+
 
 class AuthController extends Controller
 {
@@ -94,13 +101,48 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function login(Request $request)
-    {
-        return 1;
-    }
 
     public function register(Request $request)
     {
         return 1;
     }
+
+    // Validation method
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        // attempt a login (validate the credentials provided)
+        $token = auth()->attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+        // if token successfully generated then display success response
+        // if attempt failed then "unauthenticated" will be returned automatically
+        if ($token)
+        {
+            return response()->json([
+                'meta' => [
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'Quote fetched successfully.',
+                ],
+                'data' => [
+                    'user' => auth()->user(),
+                    'access_token' => [
+                        'token' => $token,
+                        'type' => 'Bearer',
+                        'expires_in' => auth()->factory()->getTTL() * 60,
+                    ],
+                ],
+            ]);
+        }else {
+            return response()->json(['status' => false, 'message' => 'Invalid credentials'], 401);
+        }
+    }
+
 }

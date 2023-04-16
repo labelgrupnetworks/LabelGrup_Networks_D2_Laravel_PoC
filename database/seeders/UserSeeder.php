@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         $admin=User::create([
             'name'=>'Admin',
             'email'=>'administrador@labelgrup.com',
-            'password'=>Str::random(10)
+            'password'=> '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', //password
         ]);
 
         $rol_admin=Role::where('name', 'Administrador')->first();
