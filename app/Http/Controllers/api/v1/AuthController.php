@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
-
+use App\Http\Helpers\Helpers;
 
 class AuthController extends Controller
 {
@@ -93,12 +93,28 @@ class AuthController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        $isAdmin = Helpers::isAdmin();
+        if($isAdmin){
+            if(Auth::user()->id == $user->id){
+                return response()->json([
+                    'status'    => true,
+                    'message'   => 'Cannot delete your own user'
+                ], 401);
+            }
 
-        return response()->json([
-            'status'    => true,
-            'message'   => 'User deleted successfully'
-        ], 200);
+            $user->delete();
+
+            return response()->json([
+                'status'    => true,
+                'message'   => 'User deleted successfully'
+            ], 200);
+        }else{
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Only Administrador or Moderador rol can delete'
+            ], 200);
+        }
+
     }
 
 
