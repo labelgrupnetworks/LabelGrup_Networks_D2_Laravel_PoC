@@ -15,8 +15,6 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-
-
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
@@ -55,7 +53,6 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-
         if($user->hasDirectPermission('create user'))
         {
             $user = $this->user::create([
