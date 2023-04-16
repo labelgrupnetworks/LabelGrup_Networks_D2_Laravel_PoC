@@ -144,8 +144,6 @@ class AuthController extends Controller
                 'message'   => 'User doesnt have permission to this action'
             ], 200);
         }
-
-
     }
 
     // Register new user
