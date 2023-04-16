@@ -50,6 +50,7 @@ class UserSeeder extends Seeder
         $admin->givePermissionTo(['edit product', 'delete product', 'create product', 'get product', 'assign categories']);
         $admin->givePermissionTo(['edit category', 'delete category', 'create category', 'get category']);
         $admin->givePermissionTo(['edit image', 'delete image', 'create image', 'get image']);
+        $admin->givePermissionTo(['edit user', 'delete user', 'create user', 'get user']);
 
         $moderator=User::create([
             'name'=>'Moderator',
