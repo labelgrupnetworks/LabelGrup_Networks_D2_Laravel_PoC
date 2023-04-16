@@ -19,7 +19,7 @@ class CategoryController extends Controller
     {
         $user = Auth::user();
 
-        if($user->hasDirectPermission('create category'))
+        if($user->hasDirectPermission('get category'))
         {
             $categories = Category::all();
 
@@ -110,7 +110,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $user = Auth::user();
-
         if($user->hasDirectPermission('delete category'))
         {
             $category->delete();
