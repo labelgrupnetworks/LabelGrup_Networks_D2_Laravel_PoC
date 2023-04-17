@@ -25,8 +25,4 @@ class Product extends Model
         ->withPivot('is_main')->withTimestamps();
     }
 
-    // public function mainCategory(){
-
-    //     return $this->hasOne(Category::class, 'product_category')->where('is_main',1);
-    // }
 }
