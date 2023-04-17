@@ -39,6 +39,13 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'create image']);
         Permission::create(['name' => 'get image']);
 
+        // create permissions for images
+        Permission::create(['name' => 'edit user']);
+        Permission::create(['name' => 'delete user']);
+        Permission::create(['name' => 'create user']);
+        Permission::create(['name' => 'get user']);
+
+
         $admin=User::create([
             'name'=>'Admin',
             'email'=>'administrador@labelgrup.com',
